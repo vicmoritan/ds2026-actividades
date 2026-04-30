@@ -18,7 +18,7 @@ async function obtenerUsuarios(): Promise<Usuario[]> {
     const usuarios: Usuario[] = await response.json();
     return usuarios;
     }
-    
+
     catch (error) {
         console.error('Error al obtener usuarios: ', error);
         return [];
@@ -26,7 +26,7 @@ async function obtenerUsuarios(): Promise<Usuario[]> {
 }
 
 //Función para mostrar los nombres y emails de usuarios obtenidos
-    async function mostrarUsuarios() {
+async function mostrarUsuarios() {
     const listaUsuarios = await obtenerUsuarios();
     listaUsuarios.forEach(usuario => {
         console.log(`Nombre: ${usuario.name}`);
