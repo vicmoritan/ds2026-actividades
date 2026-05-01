@@ -45,7 +45,7 @@ async function mostrarUsuarios(): {
         listaUsuarios.forEach(usuario => {
             const user = document.createElement("li");
             user.textContent = `Nombre: ${usuario.name} - Email: ${usuario.email}`;
-            UsersList?.append(user);
+            UsersList.append(user);
         });
 }
 
