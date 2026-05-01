@@ -1,7 +1,7 @@
 //Obtención de elementos HTML
-const msjCargando = document.getElementById("cargando");
-const msjError = document.getElementById("error");
-const UsersList = document.getElementById("lista");
+const msjCargando = document.getElementById("cargando") as HTMLParagraphElement;
+const msjError = document.getElementById("error") as HTMLParagraphElement;
+const UsersList = document.getElementById("lista") as HTMLUListElement;
 
 //Estructura del usuario
 interface Usuario {
