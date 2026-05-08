@@ -1,0 +1,16 @@
+/* fuente para el nav */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
+.navbar {
+    background-color: rgb(118, 8, 76);
+    padding: 10px;
+    font-family: 'DM Serif Display', serif;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
