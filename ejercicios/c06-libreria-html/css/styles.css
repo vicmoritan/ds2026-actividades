@@ -60,6 +60,8 @@ body {
     overflow: hidden;
     box-shadow: 2px 2px 8px lightgray;
     height: 100%;
+    max-width: 250px;
+    margin: auto;
 }
 
 .container {
@@ -74,6 +76,7 @@ body {
 
 .card-img-top {
     height: 300px;
+    object-fit: contain;
 }
 
 .btn-secondary {
