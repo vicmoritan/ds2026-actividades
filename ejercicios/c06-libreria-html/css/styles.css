@@ -3,12 +3,14 @@
 
 :root {
     --color-principal: rgb(118, 8, 76);
+    --fuente: 'DM Serif Display', serif;
+    --sombra-caja: 2px 2px 8px lightgray;
 }
 
 .navbar {
     background-color: var(--color-principal);
     padding: 10px;
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--fuente);
 }
 
 .navbar-brand {
@@ -58,7 +60,7 @@ body {
 .card {
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 2px 2px 8px lightgray;
+    box-shadow: var(--sombra-caja);
     height: 100%;
     max-width: 250px;
     margin: auto;
@@ -69,16 +71,30 @@ body {
 }
 
 .subtituloDestacados {
-    font-family: 'DM Serif Display', serif;
+    font-family: var(--fuente);
     font-size: 3rem;
     margin: 20px 0px;
 }
 
 .card-img-top {
     height: 300px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .btn-secondary {
     border-radius: 30px;
+}
+
+form {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--sombra-caja);
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.otrosTitulos{
+    font-family: var(--fuente);
+    text-align: center;
 }
