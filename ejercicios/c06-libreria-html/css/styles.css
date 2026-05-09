@@ -39,7 +39,7 @@
     font-size: 1.5rem;
 }
 
-.btn {
+.btn-primary {
     background-color: var(--color-principal);
     border: none;
     border-radius: 30px;
@@ -47,7 +47,7 @@
 }
 
 /*color de botón cuando paso el mouse por encima y cuando hago click*/
-.btn:hover, .btn:active {
+.btn-primary:hover, .btn-primary:active {
     background-color: rgb(90, 5, 58) !important;
 }
 
@@ -74,4 +74,8 @@ body {
 
 .card-img-top {
     height: 300px;
+}
+
+.btn-secondary {
+    border-radius: 30px;
 }
