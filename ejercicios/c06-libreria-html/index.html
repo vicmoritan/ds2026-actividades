@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+    <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">📚 Libros del subsuelo</a>
@@ -23,15 +25,83 @@
                         <a class="nav-link" href="catalogo.html">Catálogo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="libro.html">Detalle de libro</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="contacto.html">Contacto</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="tituloHero">¡Te damos la bienvenida a Libros del Subsuelo!</h1>
+            <h2 class="subtituloHero">Donde el libro de tus sueños se hace realidad</h2>
+              <button class="btn btn-primary" type="button">Accedé a nuestro catálogo</button>
+        </div>
+    </section>
+
+    <!-- Libros destacados -->
+     <div class="container text-center">
+        <h2 class="subtituloDestacados">Libros destacados</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-2">
+                <div class="card">
+                    <img src="imagenes/CrimenYCastigo.jpg" class="card-img-top" alt="Portada del libro Crimen y Castigo">
+                    <div class="card-body">
+                        <h5 class="card-title">Crimen y Castigo</h5>
+                        <p class="card-text">Fiódor Dostoievski</p>
+                        <a href="libro.html" class="btn btn-primary w-75">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card">
+                    <img src="imagenes/Demian.jpg" class="card-img-top" alt="Portada del libro Demian">
+                    <div class="card-body">
+                        <h5 class="card-title">Demian</h5>
+                        <p class="card-text">Herman Hesse</p>
+                        <a href="libro.html" class="btn btn-primary w-75">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card">
+                    <img src="imagenes/ElCondeDeMontecristo.jpg" class="card-img-top" alt="Portada del libro El Conde de Montecristo">
+                    <div class="card-body">
+                        <h5 class="card-title">El Conde de Montecristo</h5>
+                        <p class="card-text">Alexandre Dumas</p>
+                        <a href="libro.html" class="btn btn-primary w-75">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card">
+                    <img src="imagenes/AnnaKarenina.jpg" class="card-img-top" alt="Portada del libro Anna Karenina">
+                    <div class="card-body">
+                        <h5 class="card-title">Anna Karenina</h5>
+                        <p class="card-text">Lev Tolstói</p>
+                        <a href="libro.html" class="btn btn-primary w-75">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card">
+                    <img src="imagenes/OrgulloYPrejuicio.jpg" class="card-img-top" alt="Portada del libro Orgullo y Prejuicio">
+                    <div class="card-body">
+                        <h5 class="card-title">Orgullo y Prejuicio</h5>
+                        <p class="card-text">Jane Austen</p>
+                        <a href="libro.html" class="btn btn-primary w-75">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/data.js"></script>

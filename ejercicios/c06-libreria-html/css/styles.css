@@ -1,8 +1,12 @@
 /* fuente para el nav */
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 
+:root {
+    --color-principal: rgb(118, 8, 76);
+}
+
 .navbar {
-    background-color: rgb(118, 8, 76);
+    background-color: var(--color-principal);
     padding: 10px;
     font-family: 'DM Serif Display', serif;
 }
@@ -13,4 +17,57 @@
 
 .navbar-nav {
     gap: 20px;
+}
+
+.hero {
+    /*imagen de fondo oscurecida para visualizar mejor el texto*/
+    background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("../imagenes/libreria.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.tituloHero {
+    font-size: 4rem;
+}
+
+.subtituloHero {
+    font-size: 1.5rem;
+}
+
+.btn {
+    background-color: var(--color-principal);
+    border: none;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+/*color de botón cuando paso el mouse por encima y cuando hago click*/
+.btn:hover, .btn:active {
+    background-color: rgb(90, 5, 58) !important;
+}
+
+body {
+    background-color: #f8f5f2;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 2px 2px 8px lightgray;
+    height: 100%;
+}
+
+.container {
+    padding-bottom: 8px;
+}
+
+.subtituloDestacados {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    margin: 20px 0px;
 }
