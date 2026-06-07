@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import LibroCard from '../components/LibroCard'
+import Hero from '../components/Hero'
 import { libros } from '../data/libros'
 import '../App.css'
 
@@ -9,6 +10,7 @@ function Home() {
 
     return (
         <>
+        <Hero />
         <Container className="text-center">
             <h2 className="subtituloDestacados my-5">
                 Libros destacados
