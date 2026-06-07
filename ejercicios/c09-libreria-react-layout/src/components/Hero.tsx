@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
@@ -9,7 +10,7 @@ function Hero() {
 
                 <h2 className="subtituloHero"> Historias profundas para mentes inquietas.</h2>
 
-                <Button variant="primary"> Accedé a nuestro catálogo </Button>
+                <Link to="/catalogo" className="btn btn-primary"> Acceder al catálogo </Link>
             </Container>
         </section>
     )

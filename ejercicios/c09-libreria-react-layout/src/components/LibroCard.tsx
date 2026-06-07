@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {useState} from 'react'
@@ -19,7 +20,7 @@ function LibroCard({libro}: LibroCardProps) {
             </Card.Body>
             
                 <div className="d-flex flex-column gap-2 align-items-center mb-3">
-                    <Button variant="primary"> Ver más </Button>
+                <Link to={`/libros/${libro.id}`} className="btn btn-primary"> Ver más </Link>
 
                     <Button variant={agregado ? "dark" : "outline-dark"} onClick={() => setAgregado(!agregado)}>
                         { agregado ? "Agregado ✓" : "Agregar al carrito"}

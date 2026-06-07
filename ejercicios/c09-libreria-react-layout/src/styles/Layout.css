@@ -11,3 +11,13 @@
 .navbar-nav {
     gap: 20px;
 }
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
