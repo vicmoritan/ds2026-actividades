@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+
+:root {
+    --color-principal: rgb(118, 8, 76);
+    --fuente: 'DM Serif Display', serif;
+    --sombra-caja: 2px 2px 8px lightgray;
+}
+
+body {
+    background-color: #f8f5f2;
+}
+
+.custom-navbar {
+    background-color: var(--color-principal);
+    padding: 10px;
+    font-family: var(--fuente);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
+
+.hero {
+    background-image:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("/imagenes/libreria.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.tituloHero {
+    font-size: 4rem;
+}
+
+.subtituloHero {
+    font-size: 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--color-principal) !important;
+    border: none !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: rgb(90, 5, 58) !important;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--sombra-caja);
+    height: 100%;
+    max-width: 250px;
+    margin: auto;
+}
+
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+}
+
+.subtituloDestacados {
+    font-family: var(--fuente);
+    font-size: 3rem;
+    margin: 20px 0px;
+}
+
+.card-title {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-text {
+    min-height: 40px;
+}
+
+.card button {
+    width: 150px;
+}
