@@ -2,61 +2,51 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import type { LibroCardProps } from '../types/libroCardProps'
+import { libroSchema, type LibroValidado } from '../schemas/libroSchema'
 
 interface Props {
     onAgregar: (libro: LibroCardProps) => void
 }
 
 function LibroNuevo({ onAgregar }: Props) {
-
     const navigate = useNavigate()
-
     const [form, setForm] = useState({titulo: '', autor: '', descripcion: '', precio: ''})
-
     const [errores, setErrores] = useState<Record<string, string>>({})
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {const { name, value } = e.target 
+    const handleChange = (e: React.ChangeEvent <HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+
         setForm({...form, [name]: value})
-    }
-
-    const validarCampos = () => {
-        const erroresValidacion: Record<string, string> = {}
-
-        if (form.titulo.trim() === '') {
-            erroresValidacion.titulo = 'Ingrese un título'
-        }
-
-        if (form.autor.trim() === '') {
-            erroresValidacion.autor = 'Ingrese un autor'
-        }
-
-        if (form.descripcion.trim() === '') {
-            erroresValidacion.descripcion = 'Ingrese una descripción'
-        }
-
-        if (form.precio === '' || Number(form.precio) <= 0) {
-            erroresValidacion.precio = 'Ingrese un precio válido'
-        }
-
-        return erroresValidacion
     }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        const erroresValidacion = validarCampos()
+        const resultado = libroSchema.safeParse(form)
 
-        if (Object.keys(erroresValidacion).length !== 0) {
-            setErrores(erroresValidacion)
+        if (!resultado.success) {
+            const errores: Record<string, string> = {}
+
+            for (const issue of resultado.error.issues) {
+                const campo = String(issue.path[0])
+
+                if (!errores[campo]) {
+                    errores[campo] = issue.message
+                }
+            }
+
+            setErrores(errores)
             return
         }
 
+        setErrores({})
+
+        const libroValidado: LibroValidado = resultado.data
+
         onAgregar({
+            ...libroValidado,
             id: Date.now(),
-            titulo: form.titulo,
-            autor: form.autor,
-            descripcion: form.descripcion,
-            precio: Number(form.precio),
+            precio: Number(libroValidado.precio),
             imagen: '/imagenes/sinImagen.jpg'
         })
 
@@ -69,7 +59,9 @@ function LibroNuevo({ onAgregar }: Props) {
             className="container pt-5 mt-4"
             style={{ maxWidth: '500px' }}
         >
-            <h2 className="subtituloDestacados text-center mb-4"> Agregar libro </h2>
+            <h2 className="subtituloDestacados text-center mb-4">
+                Agregar libro
+            </h2>
 
             <Form.Group className="mb-3">
                 <Form.Label>Título</Form.Label>
@@ -127,9 +119,7 @@ function LibroNuevo({ onAgregar }: Props) {
             </Form.Group>
 
             <div className="text-center">
-                <Button type="submit">
-                    Agregar libro
-                </Button>
+                <Button type="submit"> Agregar libro </Button>
             </div>
         </Form>
     )
