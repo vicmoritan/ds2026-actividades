@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import type { LibroCardProps } from '../types/libroCardProps'
 import { libroSchema, type LibroValidado } from '../schemas/libroSchema'
 
@@ -10,43 +11,13 @@ interface Props {
 
 function LibroNuevo({ onAgregar }: Props) {
     const navigate = useNavigate()
-    const [form, setForm] = useState({titulo: '', autor: '', descripcion: '', precio: ''})
-    const [errores, setErrores] = useState<Record<string, string>>({})
+    const {register, handleSubmit, formState: { errors }} = useForm<LibroValidado>({resolver: zodResolver(libroSchema)})
 
-    const handleChange = (e: React.ChangeEvent <HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target
-
-        setForm({...form, [name]: value})
-    }
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-
-        const resultado = libroSchema.safeParse(form)
-
-        if (!resultado.success) {
-            const errores: Record<string, string> = {}
-
-            for (const issue of resultado.error.issues) {
-                const campo = String(issue.path[0])
-
-                if (!errores[campo]) {
-                    errores[campo] = issue.message
-                }
-            }
-
-            setErrores(errores)
-            return
-        }
-
-        setErrores({})
-
-        const libroValidado: LibroValidado = resultado.data
-
+    const onSubmit = (data: LibroValidado) => {
         onAgregar({
-            ...libroValidado,
+            ...data,
             id: Date.now(),
-            precio: Number(libroValidado.precio),
+            precio: Number(data.precio),
             imagen: '/imagenes/sinImagen.jpg'
         })
 
@@ -54,38 +25,29 @@ function LibroNuevo({ onAgregar }: Props) {
     }
 
     return (
-        <Form
-            onSubmit={handleSubmit}
-            className="container pt-5 mt-4"
-            style={{ maxWidth: '500px' }}
-        >
-            <h2 className="subtituloDestacados text-center mb-4">
-                Agregar libro
-            </h2>
+        <Form onSubmit={handleSubmit(onSubmit)} className="container pt-5 mt-4" style={{ maxWidth: '500px' }}>
+
+            <h2 className="subtituloDestacados text-center mb-4"> Agregar libro </h2>
 
             <Form.Group className="mb-3">
                 <Form.Label>Título</Form.Label>
                 <Form.Control
-                    name="titulo"
-                    value={form.titulo}
-                    onChange={handleChange}
-                    isInvalid={!!errores.titulo}
+                    {...register('titulo')}
+                    isInvalid={!!errors.titulo}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errores.titulo}
+                    {errors.titulo?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Autor</Form.Label>
                 <Form.Control
-                    name="autor"
-                    value={form.autor}
-                    onChange={handleChange}
-                    isInvalid={!!errores.autor}
+                    {...register('autor')}
+                    isInvalid={!!errors.autor}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errores.autor}
+                    {errors.autor?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -94,13 +56,11 @@ function LibroNuevo({ onAgregar }: Props) {
                 <Form.Control
                     as="textarea"
                     rows={3}
-                    name="descripcion"
-                    value={form.descripcion}
-                    onChange={handleChange}
-                    isInvalid={!!errores.descripcion}
+                    {...register('descripcion')}
+                    isInvalid={!!errors.descripcion}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errores.descripcion}
+                    {errors.descripcion?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -108,18 +68,18 @@ function LibroNuevo({ onAgregar }: Props) {
                 <Form.Label>Precio</Form.Label>
                 <Form.Control
                     type="number"
-                    name="precio"
-                    value={form.precio}
-                    onChange={handleChange}
-                    isInvalid={!!errores.precio}
+                    {...register('precio')}
+                    isInvalid={!!errors.precio}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errores.precio}
+                    {errors.precio?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <div className="text-center">
-                <Button type="submit"> Agregar libro </Button>
+                <Button type="submit">
+                    Agregar libro
+                </Button>
             </div>
         </Form>
     )
