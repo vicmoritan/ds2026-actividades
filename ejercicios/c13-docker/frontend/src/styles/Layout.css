@@ -1,0 +1,23 @@
+.custom-navbar {
+    background-color: var(--color-principal);
+    padding: 10px;
+    font-family: var(--fuente);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
