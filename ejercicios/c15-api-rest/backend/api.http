@@ -1,0 +1,87 @@
+@baseUrl = http://localhost:3000
+
+### Hello
+GET {{baseUrl}}/
+
+### Listar todos los libros
+GET {{baseUrl}}/api/libros
+
+### Obtener un libro por ID
+GET {{baseUrl}}/api/libros/1
+
+### Error: libro inexistente
+GET {{baseUrl}}/api/libros/999
+
+### Crear un libro
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "1984",
+  "autor": "George Orwell",
+  "imagen": "/imagenes/1984.jpg",
+  "descripcion": "Una de las novelas distópicas más influyentes de la literatura. Retrata una sociedad sometida a la vigilancia constante, la manipulación de la información y el control absoluto del Estado.",
+  "precio": 22999
+}
+
+### Actualizar parcialmente un libro
+PATCH {{baseUrl}}/api/libros/11
+Content-Type: application/json
+
+{
+  "precio": 21999
+}
+
+### Error: actualizar libro inexistente
+PATCH {{baseUrl}}/api/libros/999
+Content-Type: application/json
+
+{
+  "precio": 21999
+}
+
+### Eliminar un libro
+DELETE {{baseUrl}}/api/libros/11
+
+### Error: eliminar libro inexistente
+DELETE {{baseUrl}}/api/libros/999
+
+### Obtener todos los autores
+GET {{baseUrl}}/api/autores
+
+### Obtener un autor por ID
+GET {{baseUrl}}/api/autores/1
+
+### Error: autor inexistente
+GET {{baseUrl}}/api/autores/999
+
+### Crear un autor
+POST {{baseUrl}}/api/autores
+Content-Type: application/json
+
+{
+  "nombre": "George Orwell",
+  "nacionalidad": "Británico"
+}
+
+### Actualizar un autor
+PATCH {{baseUrl}}/api/autores/11
+Content-Type: application/json
+
+{
+  "nacionalidad": "Ruso"
+}
+
+### Error: actualizar autor inexistente
+PATCH {{baseUrl}}/api/autores/999
+Content-Type: application/json
+
+{
+  "nacionalidad": "Francés"
+}
+
+### Eliminar un autor
+DELETE {{baseUrl}}/api/autores/11
+
+### Error: eliminar autor inexistente
+DELETE {{baseUrl}}/api/autores/999
