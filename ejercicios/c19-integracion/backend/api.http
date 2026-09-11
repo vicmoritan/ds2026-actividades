@@ -1,0 +1,301 @@
+@baseUrl = http://localhost:3000
+
+### Hello
+GET {{baseUrl}}/
+
+### Registro
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{ "nombre": "Ana", "email": "ana@libreria.test", "password": "Libreria2026" }
+
+### Login
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "ana@libreria.test", "password": "Libreria2026" }
+
+### Guardamos el token de la respuesta anterior
+@token = {{login.response.body.$.token}}
+
+### Ahora cualquier request protegido lo usa
+GET {{baseUrl}}/api/auth/yo
+Authorization: Bearer {{token}}
+
+### Tabla de pruebas
+
+### 1. Registro exitoso (Esperado: 201 sin passwordHash)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Nuevo Usuario",
+  "email": "nuevo@libreria.test",
+  "password": "Password123"
+}
+
+### 2. Registro mismo email (Esperado: 409)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Nuevo Usuario",
+  "email": "nuevo@libreria.test",
+  "password": "Password123"
+}
+
+### 3. Registro password corta (Esperado: 400 con 3 errores)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Test",
+  "email": "test@libreria.test",
+  "password": "123"
+}
+
+### 4. Login mail que no existe (Esperado: 401 Credenciales inválidas)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "noexiste@libreria.test",
+  "password": "Password123"
+}
+
+### 5. Login password mal (Esperado: 401 Credenciales inválidas)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "nuevo@libreria.test",
+  "password": "ContraseñaEquivocada1"
+}
+
+### 6. Login correcto CLIENTE (Esperado: 200 con token)
+# Usamos las credenciales del seed
+# @name loginCliente
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "cliente@libreria.test",
+  "password": "Cliente1234"
+}
+
+### Guardamos el token del cliente
+@tokenCliente = {{loginCliente.response.body.$.token}}
+
+### 7. GET /auth/yo sin header (Esperado: 401)
+GET {{baseUrl}}/api/auth/yo
+
+### 8. GET /auth/yo como CLIENTE (Esperado: 200)
+GET {{baseUrl}}/api/auth/yo
+Authorization: Bearer {{tokenCliente}}
+
+### 9. POST /api/libros sin header (Esperado: 401)
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "Intento sin login",
+  "precio": 15000
+}
+
+### 10. POST /api/libros como CLIENTE (Esperado: 403)
+# authenticate permite pasar y authorize("ADMIN") devuelve 403 para CLIENTE.
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{
+  "titulo": "Intento de cliente",
+  "precio": 15000
+}
+
+### LOGIN PREVIO: Login correcto ADMIN (Requisito para el paso 11)
+# @name loginAdmin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@libreria.test",
+  "password": "Admin1234"
+}
+
+### Guardamos el token del admin
+@tokenAdmin = {{loginAdmin.response.body.$.token}}
+
+### 11. POST /api/libros como ADMIN (Esperado: 201)
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{
+  "titulo": "Libro de prueba Admin",
+  "precio": 15000,
+  "imagen": "/imagenes/libro-prueba.jpg",
+  "descripcion": "Libro agregado por el administrador",
+  "autorId": 1
+}
+
+### 12. GET /api/libros sin header (Esperado: 200, es público)
+GET {{baseUrl}}/api/libros
+
+
+
+### Listar todos los libros
+GET {{baseUrl}}/api/libros
+
+### Obtener un libro por ID
+GET {{baseUrl}}/api/libros/1
+
+### Error: libro inexistente
+GET {{baseUrl}}/api/libros/999
+
+### Crear un libro
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "1984",
+  "autorId": 1,
+  "imagen": "/imagenes/1984.jpg",
+  "descripcion": "Una de las novelas distópicas más influyentes de la literatura. Retrata una sociedad sometida a la vigilancia constante, la manipulación de la información y el control absoluto del Estado.",
+  "precio": 22999
+}
+
+### Actualizar parcialmente un libro
+PATCH {{baseUrl}}/api/libros/11
+Content-Type: application/json
+
+{
+  "precio": 21999
+}
+
+### Error: actualizar libro inexistente
+PATCH {{baseUrl}}/api/libros/999
+Content-Type: application/json
+
+{
+  "precio": 21999
+}
+
+### Eliminar un libro
+DELETE {{baseUrl}}/api/libros/11
+
+### Error: eliminar libro inexistente
+DELETE {{baseUrl}}/api/libros/999
+
+### Obtener todos los autores
+GET {{baseUrl}}/api/autores
+
+### Obtener un autor por ID
+GET {{baseUrl}}/api/autores/1
+
+### Error: autor inexistente
+GET {{baseUrl}}/api/autores/999
+
+### Crear un autor
+POST {{baseUrl}}/api/autores
+Content-Type: application/json
+
+{
+  "nombre": "George Orwell",
+  "nacionalidad": "Británico"
+}
+
+### Actualizar un autor
+PATCH {{baseUrl}}/api/autores/11
+Content-Type: application/json
+
+{
+  "nacionalidad": "Ruso"
+}
+
+### Error: actualizar autor inexistente
+PATCH {{baseUrl}}/api/autores/999
+Content-Type: application/json
+
+{
+  "nacionalidad": "Francés"
+}
+
+### Eliminar un autor
+DELETE {{baseUrl}}/api/autores/11
+
+### Error: eliminar autor inexistente
+DELETE {{baseUrl}}/api/autores/999
+
+### 400 - Libro sin título (Zod lo rechaza)
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+
+{
+  "precio": 22999,
+  "imagen": "/imagenes/1984.jpg",
+  "autorId": 1
+}
+
+### 400 - id inválido (Zod coerce falla)
+GET {{baseUrl}}/api/libros/abc
+
+### 400/409 - El autor no existe (Falla clave foránea)
+POST {{baseUrl}}/api/libros
+Content-Type: application/json
+
+{
+  "titulo": "Libro huerfano",
+  "precio": 5000,
+  "imagen": "https://...",
+  "autorId": 9999
+}
+
+### 409 - Autor duplicado (Falla @unique)
+POST {{baseUrl}}/api/autores
+Content-Type: application/json
+
+{
+  "nombre": "George Orwell",
+  "nacionalidad": "Británico"
+}
+
+### 409 - Borrar un autor con libros (Falla Restrict)
+DELETE {{baseUrl}}/api/autores/1
+
+### 404 - Actualizar libro que no existe (Falla negocio/P2025)
+PATCH {{baseUrl}}/api/libros/9999
+Content-Type: application/json
+
+{
+  "precio": 21999
+}
+
+
+### Listar todas las categorías
+GET {{baseUrl}}/api/categorias
+
+### Crear una categoría
+POST {{baseUrl}}/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Ciencia Ficción"
+}
+
+### Error 400: Zod rechaza nombre vacío
+POST {{baseUrl}}/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": ""
+}
+
+### Error 409: Categoría duplicada (Falla @unique)
+POST {{baseUrl}}/api/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Ciencia Ficción"
+}
