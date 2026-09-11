@@ -1,0 +1,79 @@
+.hero {
+    background-image:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("/imagenes/libreria.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.tituloHero {
+    font-size: 4rem;
+}
+
+.subtituloHero {
+    font-size: 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--color-principal) !important;
+    border: none !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: rgb(90, 5, 58) !important;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--sombra-caja);
+    height: 100%;
+    max-width: 250px;
+    margin: auto;
+}
+
+.card-img-top {
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+
+.subtituloDestacados {
+    font-family: var(--fuente);
+    font-size: 3rem;
+    margin: 20px 0px;
+}
+
+.card-title {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-text {
+    min-height: 40px;
+}
+
+.card button {
+    width: 150px;
+}
+
+.imagen-detalle {
+    max-width: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.botonAgregar {
+    font-size: 1.05rem;
+    padding: 10px 24px !important;
+    border-radius: 30px;
+}
