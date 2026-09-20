@@ -23,7 +23,7 @@ function App() {
           </Routes>
         </Layout>
       </BusquedaProvider>
-    </AuthProvider
+    </AuthProvider>
   )
 }
 
