@@ -7,12 +7,23 @@ import Alert from 'react-bootstrap/Alert'
 import { useNavigate } from 'react-router-dom'
 import LibroCard from '../components/LibroCard'
 import { useFetch } from '../hooks/useFetch'
+import { useBusqueda } from '../context/BusquedaContext'
 import type { LibroCardProps } from '../types/libroCardProps'
 import '../App.css'
 
 function Libros() {
     const navigate = useNavigate()
+    const { filtro } = useBusqueda()
     const { data: libros, loading, error } = useFetch<LibroCardProps[]>('/libros')
+
+    const librosFiltrados = libros?.filter((libro) => {
+        const texto = filtro.trim().toLowerCase();
+        if (!texto) return true;
+        return (
+            libro.titulo.toLowerCase().includes(texto) ||
+            libro.autor?.nombre?.toLowerCase().includes(texto)
+        );
+    });
 
     if (loading) {
         return (
@@ -45,11 +56,15 @@ function Libros() {
                 </Button>
             </div>
 
-            {(!libros || libros.length === 0) ? (
-                <p className="text-center text-muted">No hay libros para mostrar en este momento.</p>
+            {(!librosFiltrados || librosFiltrados.length === 0) ? (
+                <p className="text-center text-muted">
+                    {filtro.trim()
+                        ? 'No se encontraron libros que coincidan con la búsqueda.'
+                        : 'No hay libros para mostrar en este momento.'}
+                </p>
             ) : (
                 <Row className="g-4 justify-content-center">
-                    {libros.map((libro) => (
+                    {librosFiltrados.map((libro) => (
                         <Col lg={3} md={4} sm={6} xs={12} className="mb-3" key={libro.id}>
                             <LibroCard {...libro} />
                         </Col>

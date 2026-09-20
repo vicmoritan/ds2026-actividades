@@ -1,12 +1,10 @@
-import { apiFetch } from '../services/api';
-import { guardarToken } from '../services/sesion';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import type { LoginValidado } from '../schemas/loginSchema';
-import type { Sesion } from '../types/sesionType';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '../schemas/loginSchema';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -16,11 +14,11 @@ export default function Login() {
         resolver: zodResolver(loginSchema)
     });
 
+    const { login } = useAuth();
+
     const onSubmit = async (datos: LoginValidado) => {
     try {
-        const sesion = await apiFetch<Sesion>('/auth/login',
-        { method: 'POST', body: JSON.stringify(datos) });
-        guardarToken(sesion.token);
+        await login(datos);
         navigate('/catalogo');
     } catch (e) {
         setErrorApi(e instanceof Error ? e.message : 'Error desconocido');
