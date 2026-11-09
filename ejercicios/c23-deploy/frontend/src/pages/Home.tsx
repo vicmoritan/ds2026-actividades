@@ -44,7 +44,7 @@ function Home() {
                 </h2>
 
                 <Row className="g-4 justify-content-center">
-                    {(libros ?? []).map((libro) => (
+                    {(libros ?? []).slice(0, 6).map((libro) => (
                         <Col lg={2} md={4} sm={6} xs={12} key={libro.id}>
                             <LibroCard {...libro} />
                         </Col>
