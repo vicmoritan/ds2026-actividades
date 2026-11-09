@@ -57,14 +57,16 @@ function Header() {
             <button className="btn-login ms-lg-3 mt-2 mt-lg-0" onClick={manejarSesion}>
               {usuario ? 'Salir' : 'Ingresar'}
             </button>
-            <Nav.Link
-              as={Link}
-              to="/carrito"
-              className="ms-lg-3"
-              aria-label={`Carrito, ${libros.length} libros`}
-            >
-              <span aria-hidden="true">🛒</span> <span className="badge bg-light text-dark">{libros.length}</span>
-            </Nav.Link>
+            {!tieneRol('ADMIN') && (
+              <Nav.Link
+                as={Link}
+                to="/carrito"
+                className="ms-lg-3"
+                aria-label={`Carrito, ${libros.length} libros`}
+              >
+                <span aria-hidden="true">🛒</span> <span className="badge bg-light text-dark">{libros.length}</span>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

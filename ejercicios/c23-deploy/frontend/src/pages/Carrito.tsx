@@ -4,10 +4,22 @@ import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import { Link } from 'react-router-dom';
 import { useCarrito } from '../context/CarritoContext';
+import { useAuth } from '../context/AuthContext';
 import { formatearPrecio } from '../utils/formatearPrecio';
+import { Navigate } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 function Carrito() {
   const { libros, quitar } = useCarrito();
+  const { cargando, tieneRol } = useAuth();
+
+  if (cargando) {
+    return <div className="py-5 text-center"><Spinner animation="border" /></div>;
+  }
+
+  if (tieneRol('ADMIN')) {
+    return <Navigate to="/catalogo" replace />;
+  }
 
   return (
     <Container className="py-5">

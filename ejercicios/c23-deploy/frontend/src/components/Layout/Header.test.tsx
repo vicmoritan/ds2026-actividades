@@ -55,5 +55,6 @@ describe('Header Component (Renderizado por rol en la UI)', () => {
     expect(screen.getByText(/hola, admin/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /salir/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /nuevo libro/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /carrito/i })).not.toBeInTheDocument();
   });
 });
