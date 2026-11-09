@@ -8,12 +8,14 @@ import { useNavigate } from 'react-router-dom'
 import LibroCard from '../components/LibroCard'
 import { useFetch } from '../hooks/useFetch'
 import { useBusqueda } from '../context/BusquedaContext'
+import { useAuth } from '../context/AuthContext'
 import type { LibroCardProps } from '../types/libroCardProps'
 import '../App.css'
 
 function Libros() {
     const navigate = useNavigate()
     const { filtro } = useBusqueda()
+    const { tieneRol } = useAuth()
     const { data: libros, loading, error } = useFetch<LibroCardProps[]>('/libros')
 
     const librosFiltrados = libros?.filter((libro) => {
@@ -51,9 +53,11 @@ function Libros() {
                 <h1 className="subtituloDestacados position-absolute top-50 start-50 translate-middle m-0"> 
                     Nuestros libros 
                 </h1>
-                <Button className="botonAgregar" onClick={() => navigate('/libros/nuevo')}>
-                    + Agregar libro
-                </Button>
+                {tieneRol('ADMIN') && (
+                    <Button className="botonAgregar" onClick={() => navigate('/libros/nuevo')}>
+                        + Agregar libro
+                    </Button>
+                )}
             </div>
 
             {(!librosFiltrados || librosFiltrados.length === 0) ? (
@@ -66,7 +70,7 @@ function Libros() {
                 <Row className="g-4 justify-content-center">
                     {librosFiltrados.map((libro) => (
                         <Col lg={3} md={4} sm={6} xs={12} className="mb-3" key={libro.id}>
-                            <LibroCard {...libro} />
+                            <LibroCard {...libro} esAdmin={tieneRol('ADMIN')} />
                         </Col>
                     ))}
                 </Row>

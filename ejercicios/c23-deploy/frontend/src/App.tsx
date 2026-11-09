@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Libros from './pages/Catalogo';
 import LibroDetalle from './pages/LibroDetalle'
 import LibroNuevo from './pages/LibroNuevo'
+import LibroEditar from './pages/LibroEditar'
 import Login from './pages/Login'
 import Layout from './components/Layout/Layout'
 import { BusquedaProvider } from './context/BusquedaContext'; 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/libros/:id" element={<LibroDetalle />} />
             <Route element={<PrivateRoute rol="ADMIN" />}>
               <Route path="/libros/nuevo" element={<LibroNuevo />} />
+              <Route path="/libros/:id/editar" element={<LibroEditar />} />
           </Route>
           </Routes>
         </Layout>

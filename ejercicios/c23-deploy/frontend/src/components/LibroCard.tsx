@@ -5,7 +5,7 @@ import { useState } from 'react'
 import type { LibroCardProps } from '../types/libroCardProps'
 import { formatearPrecio } from '../utils/formatearPrecio'
 
-function LibroCard({ id, titulo, autor, imagen, precio }: LibroCardProps) {
+function LibroCard({ id, titulo, autor, imagen, precio, esAdmin = false }: LibroCardProps & { esAdmin?: boolean }) {
     const [agregado, setAgregado] = useState(false)
 
     return (
@@ -20,9 +20,13 @@ function LibroCard({ id, titulo, autor, imagen, precio }: LibroCardProps) {
             <div className="d-flex flex-column gap-2 align-items-center mb-3">
                 <Link to={`/libros/${id}`} className="btn btn-primary"> Ver más </Link>
 
-                <Button variant={agregado ? "dark" : "outline-dark"} onClick={() => setAgregado(!agregado)}>
-                    { agregado ? "Agregado ✓" : "Agregar al carrito"}
-                </Button>
+                {esAdmin ? (
+                    <Link to={`/libros/${id}/editar`} className="btn btn-outline-dark">Editar</Link>
+                ) : (
+                    <Button variant={agregado ? "dark" : "outline-dark"} onClick={() => setAgregado(!agregado)}>
+                        { agregado ? "Agregado ✓" : "Agregar al carrito"}
+                    </Button>
+                )}
             </div>
         </Card>
     );
