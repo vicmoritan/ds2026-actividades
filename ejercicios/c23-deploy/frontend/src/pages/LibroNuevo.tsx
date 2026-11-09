@@ -101,7 +101,10 @@ function LibroNuevo() {
 
       <Form.Control type="hidden" {...register('imagen')} />
 
-      <div className="text-center">
+      <div className="d-flex justify-content-center gap-2">
+        <Button type="button" variant="secondary" onClick={() => navigate('/catalogo')}>
+          Cancelar
+        </Button>
         <Button type="submit">
           Agregar libro
         </Button>
