@@ -37,7 +37,6 @@ export default function Login() {
                         <label>Email</label>
                         <input
                             type="email"
-                            placeholder="admin@libreria.test"
                             {...register('email')}
                         />
 
