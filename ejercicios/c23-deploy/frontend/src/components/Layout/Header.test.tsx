@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Header from './Header'; 
 import { AuthContext } from '../../context/AuthContext';
 import { BusquedaProvider } from '../../context/BusquedaContext';
+import { CarritoProvider } from '../../context/CarritoContext';
 
 beforeEach(() => { cleanup(); });
 
@@ -20,9 +21,11 @@ function renderHeader(usuario: { id: number; email: string; nombre: string; rol:
   return render(
     <MemoryRouter>
       <BusquedaProvider>
-        <AuthContext.Provider value={auth as any}>
-          <Header />
-        </AuthContext.Provider>
+        <CarritoProvider>
+          <AuthContext.Provider value={auth as any}>
+            <Header />
+          </AuthContext.Provider>
+        </CarritoProvider>
       </BusquedaProvider>
     </MemoryRouter>
   );

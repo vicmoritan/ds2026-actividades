@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import { useState } from 'react'
 import type { LibroCardProps } from '../types/libroCardProps'
 import { formatearPrecio } from '../utils/formatearPrecio'
+import { useCarrito } from '../context/CarritoContext'
 
-function LibroCard({ id, titulo, autor, imagen, precio, esAdmin = false }: LibroCardProps & { esAdmin?: boolean }) {
-    const [agregado, setAgregado] = useState(false)
+function LibroCard({ id, titulo, autor, imagen, precio, descripcion, esAdmin = false }: LibroCardProps & { esAdmin?: boolean }) {
+    const libro = { id, titulo, autor, imagen, precio, descripcion }
+    const { agregar, quitar, contiene } = useCarrito()
+    const enCarrito = contiene(id)
 
     return (
         <Card>
@@ -23,8 +25,11 @@ function LibroCard({ id, titulo, autor, imagen, precio, esAdmin = false }: Libro
                 {esAdmin ? (
                     <Link to={`/libros/${id}/editar`} className="btn btn-outline-dark">Editar</Link>
                 ) : (
-                    <Button variant={agregado ? "dark" : "outline-dark"} onClick={() => setAgregado(!agregado)}>
-                        { agregado ? "Agregado ✓" : "Agregar al carrito"}
+                    <Button
+                        variant={enCarrito ? "dark" : "outline-dark"}
+                        onClick={() => enCarrito ? quitar(id) : agregar(libro)}
+                    >
+                        { enCarrito ? "Agregado ✓" : "Agregar al carrito"}
                     </Button>
                 )}
             </div>

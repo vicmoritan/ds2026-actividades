@@ -6,9 +6,15 @@ import Spinner from 'react-bootstrap/Spinner'
 import { Button } from 'react-bootstrap'
 import { useFetch } from '../hooks/useFetch'
 import type { LibroCardProps } from '../types/libroCardProps'
+import { useAuth } from '../context/AuthContext'
+import { useCarrito } from '../context/CarritoContext'
+import { useNavigate } from 'react-router-dom'
 
 function LibroDetalle() {
     const { id } = useParams()
+    const navigate = useNavigate()
+    const { tieneRol } = useAuth()
+    const { agregar } = useCarrito()
     const { data: libros, loading } = useFetch<LibroCardProps[]>('/libros')
     const libro = libros?.find((l) => l.id === Number(id)) ?? null
 
@@ -41,7 +47,17 @@ function LibroDetalle() {
                     <p>{libro.descripcion ? libro.descripcion : "Sin descripción disponible"}</p>
                     {libro.precio && (<h3>${libro.precio}</h3>)}
                     <div className="d-flex gap-2 mt-3">
-                        <Button className="btn btn-primary">Comprar</Button>
+                        {!tieneRol('ADMIN') && (
+                            <Button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    agregar(libro)
+                                    navigate('/carrito')
+                                }}
+                            >
+                                Comprar
+                            </Button>
+                        )}
                         <Link to="/catalogo" className="btn btn-secondary"> Ir al catálogo </Link>
                     </div>
                 </Col>

@@ -5,11 +5,12 @@ import Spinner from 'react-bootstrap/Spinner'
 import LibroCard from '../components/LibroCard'
 import Hero from '../components/Hero'
 import { useFetch } from '../hooks/useFetch'
+import { useAuth } from '../context/AuthContext'
 import type { LibroCardProps } from '../types/libroCardProps'
 import '../App.css'
 
 function Home() {
-
+    const { tieneRol } = useAuth()
     const { data: libros, loading, error } = useFetch<LibroCardProps[]>('/libros')
 
     if (loading) {
@@ -46,7 +47,7 @@ function Home() {
                 <Row className="g-4 justify-content-center">
                     {(libros ?? []).slice(0, 6).map((libro) => (
                         <Col lg={2} md={4} sm={6} xs={12} key={libro.id}>
-                            <LibroCard {...libro} />
+                            <LibroCard {...libro} esAdmin={tieneRol('ADMIN')} />
                         </Col>
                     ))}
                 </Row>

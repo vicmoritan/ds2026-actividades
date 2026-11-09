@@ -3,12 +3,14 @@ import type { FormEvent } from 'react';
 import { useBusqueda } from '../../context/BusquedaContext';
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext';
+import { useCarrito } from '../../context/CarritoContext';
 
 function Header() {
   const { filtro, setFiltro } = useBusqueda(); 
   const navigate = useNavigate()
 
   const { usuario, logout, tieneRol } = useAuth();
+  const { libros } = useCarrito();
 
   const buscar = (e: FormEvent) => {
     e.preventDefault();
@@ -55,6 +57,14 @@ function Header() {
             <button className="btn-login ms-lg-3 mt-2 mt-lg-0" onClick={manejarSesion}>
               {usuario ? 'Salir' : 'Ingresar'}
             </button>
+            <Nav.Link
+              as={Link}
+              to="/carrito"
+              className="ms-lg-3"
+              aria-label={`Carrito, ${libros.length} libros`}
+            >
+              <span aria-hidden="true">🛒</span> <span className="badge bg-light text-dark">{libros.length}</span>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
