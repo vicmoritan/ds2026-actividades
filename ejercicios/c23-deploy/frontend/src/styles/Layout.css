@@ -1,0 +1,38 @@
+.custom-navbar {
+    background-color: var(--color-principal);
+    padding: 10px;
+    font-family: var(--fuente);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
+
+.custom-navbar .form-control {
+    background-color: #fff;
+    color: #212529;
+    border-color: #ced4da;
+}
+
+.custom-navbar .form-control::placeholder {
+    color: #6c757d;
+}
+
+.custom-navbar .form-control:focus {
+    background-color: #fff;
+    color: #212529;
+}
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
